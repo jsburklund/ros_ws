@@ -97,14 +97,17 @@
         <collision name='collision'>
           <geometry>
             <box>
-              <size>0.025 0.025 0.25</size>
+              <size>0.03 0.03 0.25</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
           <surface>
             <bounce/>
             <friction>
-              <ode/>
+              <ode>
+		<mu> 10</mu>
+		<mu2>10</mu2>
+	      <ode/>
             </friction>
             <contact>
               <ode/>
@@ -114,7 +117,7 @@
         <visual name='visual'>
           <geometry>
             <box>
-              <size>0.025 0.025 0.25</size>
+              <size>0.03 0.03 0.25</size>
             </box>
           </geometry>
           <material>
