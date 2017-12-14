@@ -1,0 +1,14 @@
+p6_dot_final = 3.555
+p4_dot_final = 1.777
+p6_final = 0.9996
+p4 = p6*0.5
+p4_dot = p6_dot*0.5
+
+q(t) = a1 + a2t + a3t^2 + a4t^3
+v(t) = a2 + 2a3t + 3a4t^2
+
+A_6 = [              0]
+      [              0]
+      [ 3157729/999600]
+      [              0]
+t_soln = 4998/8885 (seconds)
