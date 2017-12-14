@@ -213,18 +213,44 @@ if __name__ == '__main__':
   #right_arm.move_to_neutral()
   
   rate = rospy.Rate(_rate)
-  start = rospy.Time.now()
-  
-  rjoint_vels = dict([(joint, 0.0) for i, joint in enumerate(right_joint_names)])
-  ljoint_vels = dict([(joint, 0.0) for i, joint in enumerate(left_joint_names)])
-  print(rjoint_vels)
-  rjoint_vels['right_e1'] = -1.75
-  rjoint_vels['right_w1'] = -3.5
-  
+
+  # Make function for velocities
+  def get_v_function(A_params):
+    def v_func(t):
+      return -1*(A_params[1] + 2*A_params[2]*t + 3*A_params[3]*t*t)
+
+    return v_func
+
+  #rjoint_vels = dict([(joint, 0.0) for i, joint in enumerate(right_joint_names)])
+  #ljoint_vels = dict([(joint, 0.0) for i, joint in enumerate(left_joint_names)])
+  #print(rjoint_vels)
+  rjoint_vels = {'right_e1':0, 'right_w1':0}
+  #rjoint_vels['right_e1'] = -1.75
+  #rjoint_vels['right_w1'] = -3.5
+  my_A_params = [0, 0, 3157729/999600, 0] 
   print('Starting velocities')
-  while not rospy.is_shutdown():
+  start = rospy.Time.now().to_sec()
+  launchtime = 0.556
+
+  e1_fun = get_v_function(my_A_params)
+  w1_fun = get_v_function(my_A_params)
+  while rospy.Time.now().to_sec()-start < launchtime:
+    elapsed = rospy.Time.now().to_sec() - start
     pub_rate.publish(_rate)
-    #left_arm.set_joint_velocities(ljoint_vels)
+    rjoint_vels['right_e1'] = e1_fun(elapsed)
+    rjoint_vels['right_w1'] = 2*w1_fun(elapsed)
     right_arm.set_joint_velocities(rjoint_vels)
     rate.sleep()
 
+  right_gripper.open()
+  print('Gripper released')
+  # Spin the velocities at zero for a few seconds to help release
+  rjoint_vels = dict([(joint, 0.0) for i, joint in enumerate(right_joint_names)])
+  spintime = 1.0
+  print('Spin time')
+  elapsed = rospy.Time.now() - start
+  while rospy.Time.now().to_sec()-start < spintime:
+    pub_rate.publish(_rate)
+    right_arm.set_joint_velocities(rjoint_vels)
+    rate.sleep()
+  print('Spin done')
