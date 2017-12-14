@@ -24,7 +24,7 @@ baxter_hostname="localhost"
 # Set *Either* your computers ip address or hostname. Please note if using
 # your_hostname that this must be resolvable to Baxter.
 #your_ip="192.168.XXX.XXX"
-your_ip="localhost"
+your_ip="127.0.0.1"
 #your_hostname="my_computer.local"
 
 # Specify ROS distribution (e.g. indigo, hydro, etc.)
