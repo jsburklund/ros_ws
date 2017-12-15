@@ -102,7 +102,7 @@
   <node name="baxter_sim_io" pkg="baxter_sim_io" type="baxter_sim_io"
 	respawn="false" output="screen">
   </node>
-<node name="joint_trajectory_action_server" pkg="bottleflip" type="joint_trajectory_action_server_smart.py"/>
+<!--<node name="joint_trajectory_action_server" pkg="bottleflip" type="joint_trajectory_action_server_smart.py"/>-->
 
-
+<!--<node name="move_test" pkg="bottleflip" type="move_test.py" />-->
 </launch>

@@ -114,7 +114,7 @@ if __name__ == '__main__':
   orient_down.z = orient_quaternion_components[2]
   orient_down.w = orient_quaternion_components[3]
 
-  twist_quaternion_components = quaternion_from_euler(math.pi, 0, -math.pi/4)
+  twist_quaternion_components = quaternion_from_euler(math.pi, 0, 0)
   twist_down = Quaternion()
   twist_down.x = twist_quaternion_components[0]
   twist_down.y = twist_quaternion_components[1]
@@ -122,7 +122,7 @@ if __name__ == '__main__':
   twist_down.w = twist_quaternion_components[3]
 	
   highPose = PoseStamped(header=hdr, pose=Pose(position=Point(0, -0.428, -0.57), orientation=orient_down))
-  gripPose = PoseStamped(header=hdr, pose=Pose(position=Point(0, -0.428, -0.71), orientation=orient_down))
+  gripPose = PoseStamped(header=hdr, pose=Pose(position=Point(0, -0.435, -0.71), orientation=orient_down))
   liftPose = PoseStamped(header=hdr, pose=Pose(position=Point(0, -0.61, -0.5), orientation=twist_down))
 	
   ikreq = SolvePositionIKRequest()
@@ -164,16 +164,12 @@ if __name__ == '__main__':
   current_angles = [right_limb.joint_angle(joint) for joint in right_limb.joint_names()]
   traj.clear('right')
   traj.add_point(current_angles, 0)
-  mod_IK = list(resp.joints[2].position)
-  mod_IK[5] = mod_IK[5]/2
-  mod_IK[4] = mod_IK[4]/2
-   
-  traj.add_point(mod_IK, 4)
-  traj.start()
-  traj.wait(5)
+  traj.add_point(resp.joints[2].position, 4)
+#  traj.start()
+#  traj.wait(5)
   print('Object picked up')
   print(rospy.get_rostime().secs)
-  rospy.sleep(2)  
+  
   #Get the arm ready for launch
   traj.clear('right')
   current_angles = [right_limb.joint_angle(joint) for joint in right_limb.joint_names()]
@@ -185,11 +181,9 @@ if __name__ == '__main__':
   launch_ready[4] = 0
   launch_ready[5] = 0 
   launch_ready[6] = math.pi/2
-#  traj.add_point(current_angles, 0)
-  traj.add_point(launch_ready, 7)
-  traj.start()
-  traj.wait(10)
-  rospy.sleep(1)
+  traj.add_point(current_angles)
+  traj.add_point(launch_ready)
+  rospy.sleep(5)
 
  # print(launch_ready)
  # traj.add_point(current_angles, 0.0)
@@ -262,7 +256,7 @@ if __name__ == '__main__':
   rospy.sleep(5)
   print('Starting velocities')
   start = rospy.Time.now().to_sec()
-  launchtime = 0.57
+  launchtime = 0.556
 
   e1_fun = get_v_function(my_A_params)
   w1_fun = get_v_function(my_A_params)
