@@ -1,4 +1,4 @@
-Code to simulate the water bottle flip with the Baxter robot
+Code to simulate the water bottle flip with the Baxter robot (development started at https://github.com/rbe501-waterbottleflip/baxter, moved here to avoid issues with catkin workspaces on different computers)
 
 To run:
 1. Clone this repository
