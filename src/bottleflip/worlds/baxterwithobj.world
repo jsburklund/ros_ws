@@ -83,13 +83,13 @@
       <pose> 0.158 0.428 .125 0 0 0</pose>
       <link name='link'>
         <inertial>
-          <pose> 0 0 -0.1 0 -0 0 </pose>
-          <mass>0.2</mass>
+          <pose> 0 0 -0.12 0 -0 0 </pose>
+          <mass>0.15</mass>
           <inertia>
-            <ixx>1e-4</ixx>
+            <ixx>1.1e-4</ixx>
             <ixy>0</ixy>
             <ixz>0</ixz>
-            <iyy>1e-4</iyy>
+            <iyy>1.1e-4</iyy>
             <iyz>0</iyz>
             <izz>1e-4</izz>
           </inertia>
@@ -97,7 +97,7 @@
         <collision name='collision'>
           <geometry>
             <box>
-              <size>0.03 0.03 0.25</size>
+              <size>0.03 0.03 0.26</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -105,8 +105,8 @@
             <bounce/>
             <friction>
               <ode>
-		<mu> 10</mu>
-		<mu2>10</mu2>
+		<mu> 20</mu>
+		<mu2>20</mu2>
 	      </ode>
             </friction>
             <contact>
@@ -117,7 +117,7 @@
         <visual name='visual'>
           <geometry>
             <box>
-              <size>0.03 0.03 0.25</size>
+              <size>0.03 0.03 0.26</size>
             </box>
           </geometry>
           <material>

@@ -152,10 +152,10 @@ if __name__ == '__main__':
   traj = Trajectory('right')
   traj.add_point(current_angles, 0.0)
   traj.add_point(resp.joints[0].position, 3.0)
-  traj.add_point(resp.joints[1].position, 6.0)
+  traj.add_point(resp.joints[1].position, 5.0)
   
   traj.start()
-  traj.wait(20.0)
+  traj.wait(6.0)
   rospy.sleep(2)
   #print(current_angles)
   print("object grabbed")
@@ -173,7 +173,7 @@ if __name__ == '__main__':
   traj.wait(5)
   print('Object picked up')
   print(rospy.get_rostime().secs)
-  rospy.sleep(2)  
+  #rospy.sleep(2)  
   #Get the arm ready for launch
   traj.clear('right')
   current_angles = [right_limb.joint_angle(joint) for joint in right_limb.joint_names()]
@@ -181,15 +181,15 @@ if __name__ == '__main__':
   print(current_angles)
   launch_ready[1] = 0
   launch_ready[2] = 0
-  launch_ready[3] = math.pi/2
+  launch_ready[3] = math.pi/2.0
   launch_ready[4] = 0
   launch_ready[5] = 0 
-  launch_ready[6] = math.pi/2
+  launch_ready[6] = math.pi/2.0
 #  traj.add_point(current_angles, 0)
-  traj.add_point(launch_ready, 7)
+  traj.add_point(launch_ready, 2)
   traj.start()
-  traj.wait(10)
-  rospy.sleep(1)
+  traj.wait(3)
+#  rospy.sleep(1)
 
  # print(launch_ready)
  # traj.add_point(current_angles, 0.0)
@@ -259,18 +259,18 @@ if __name__ == '__main__':
   #rjoint_vels['right_w1'] = -3.5
   my_A_params = [0, 0, 3157729/999600, 0] 
   
-  rospy.sleep(5)
+  rospy.sleep(2)
   print('Starting velocities')
   start = rospy.Time.now().to_sec()
-  launchtime = 0.57
+  launchtime = 0.55607
 
   e1_fun = get_v_function(my_A_params)
   w1_fun = get_v_function(my_A_params)
   while rospy.Time.now().to_sec()-start < launchtime:
     elapsed = rospy.Time.now().to_sec() - start
     pub_rate.publish(_rate)
-    rjoint_vels['right_e1'] = 2*e1_fun(elapsed)
-    rjoint_vels['right_w1'] = 4*w1_fun(elapsed)
+    rjoint_vels['right_e1'] = 0.5*e1_fun(elapsed)
+    rjoint_vels['right_w1'] = 1.0*w1_fun(elapsed)
     right_arm.set_joint_velocities(rjoint_vels)
     rate.sleep()
 
